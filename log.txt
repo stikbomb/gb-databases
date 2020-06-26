@@ -1,0 +1,187 @@
+stik@pop-os:~/GeekBrains/gb-databases$ cd ~
+stik@pop-os:~$ touch .my.cnf
+stik@pop-os:~$ nano .my.cnf //login, password added 
+
+stik@pop-os:~$ cd GeekBrains/gb-databases/
+stik@pop-os:~/GeekBrains/gb-databases$ mysql
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 43
+Server version: 8.0.20-0ubuntu0.20.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+4 rows in set (0.00 sec)
+
+mysql> CREATE DATABASE example;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| example            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> USE example;
+Database changed
+mysql> CREATE TABLE users (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, name VARCHAR(30));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> SHOW TABLE users;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'users' at line 1
+mysql> SHOW TABLES;
++-------------------+
+| Tables_in_example |
++-------------------+
+| users             |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> DESCRIBE users;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int         | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(30) | YES  |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO `users` (`name`) VALUES ("Alex");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO `users` (`name`) VALUES ("Anna");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO `users` (`name`) VALUES ("Bill");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO `users` (`name`) VALUES ("Bob");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO `users` (`name`) VALUES ("Charlie");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO `users` (`name`) VALUES ("David");
+Query OK, 1 row affected (0.02 sec)
+
+mysql> INSERT INTO `users` (`name`) VALUES ("Elizabeth");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO `users` (`name`) VALUES ("Frad");
+Query OK, 1 row affected (0.02 sec)
+
+mysql> SELECT * FROM users
+    -> ;
++----+-----------+
+| id | name      |
++----+-----------+
+|  1 | Alex      |
+|  2 | Anna      |
+|  3 | Bill      |
+|  4 | Bob       |
+|  5 | Charlie   |
+|  6 | David     |
+|  7 | Elizabeth |
+|  8 | Frad      |
++----+-----------+
+8 rows in set (0.00 sec)
+
+mysql> exit;
+Bye
+stik@pop-os:~/GeekBrains/gb-databases$ mysqldump example > test_dump.sql
+stik@pop-os:~/GeekBrains/gb-databases$ ls
+test_dump.sql
+stik@pop-os:~/GeekBrains/gb-databases$ mysql
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 45
+Server version: 8.0.20-0ubuntu0.20.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE DATABASE sample;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> USE sample;
+Database changed
+[2]+  Stopped                 mysql
+stik@pop-os:~/GeekBrains/gb-databases$ mysql sample < test_dump.sql
+stik@pop-os:~/GeekBrains/gb-databases$ mysql
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 47
+Server version: 8.0.20-0ubuntu0.20.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> SHOW TABLES;
+ERROR 1046 (3D000): No database selected
+mysql> use sample;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> SHOW TABLES;
++------------------+
+| Tables_in_sample |
++------------------+
+| users            |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM users;
++----+-----------+
+| id | name      |
++----+-----------+
+|  1 | Alex      |
+|  2 | Anna      |
+|  3 | Bill      |
+|  4 | Bob       |
+|  5 | Charlie   |
+|  6 | David     |
+|  7 | Elizabeth |
+|  8 | Frad      |
++----+-----------+
+8 rows in set (0.01 sec)
+
+mysql> exit;
+Bye
+stik@pop-os:~/GeekBrains/gb-databases$ mysqldump --opt --where="1 limit 100" mysql help_keyword > 100_keyword_dump.sql
+stik@pop-os:~/GeekBrains/gb-databases$ ls
+100_keyword_dump.sql  test_dump.sql
+stik@pop-os:~/GeekBrains/gb-databases$
+stik@pop-os:~/GeekBrains/gb-databases$ mkdir lesson01
+stik@pop-os:~/GeekBrains/gb-databases$ ls
+100_keyword_dump.sql  lesson01  log.txt  test_dump.sql
+stik@pop-os:~/GeekBrains/gb-databases$ mv 100_keyword_dump.sql log.txt test_dump.sql ./lesson01/
+
