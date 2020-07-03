@@ -28,7 +28,7 @@ def add_users(db, users_count):
 
         users.append((login, email, phone))
 
-    # print(cursor.executemany(sql, users))
+    print(cursor.executemany(sql, users))
 
     print(db.commit())
     # print(cursor.lastrowid)
