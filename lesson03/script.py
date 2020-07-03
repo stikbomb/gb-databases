@@ -36,6 +36,8 @@ def add_users(db, users_count):
     myresult = cursor.fetchall()
     print(len(myresult))
 
+def add_avatars
+
 def add_profiles(db, ):
     pass
 

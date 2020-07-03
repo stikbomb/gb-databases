@@ -13,15 +13,6 @@ CREATE TABLE users (
    	INDEX users_phone_idx(phone)
 );
 
--- аватарки пользователей будут хранится в отдельной таблице
-
-DROP TABLE IF EXISTS avatars;
-CREATE TABLE avatars(
-    id SERIAL PRIMARY KEY,
-    path varchar(255) NOT NULL,
-    created_at DATETIME DEFAULT NOW()
-);
-
 
 -- в нашей соцсети можно иметь несколько профилей (аккаунтов)
 
@@ -31,11 +22,9 @@ CREATE TABLE profiles (
 	user_id BIGINT UNSIGNED NOT NULL,
     gender CHAR(1),
     birthday DATE,
-	avatar_id BIGINT UNSIGNED NULL,
     created_at DATETIME DEFAULT NOW(),
     hometown VARCHAR(100),
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (avatar_id) REFERENCES avatars(id)
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 -- Сообщения
@@ -158,4 +147,15 @@ CREATE TABLE profiles_likes(
     PRIMARY KEY (profile_id, target_profile_id),
     FOREIGN KEY (profile_id) references profiles(id),
     FOREIGN KEY (target_profile_id) references profiles(id)
+);
+
+-- аватарки пользователей будут хранится в отдельной таблице
+
+DROP TABLE IF EXISTS avatars;
+CREATE TABLE avatars(
+    profile_id BIGINT UNSIGNED NOT NULL,
+    path varchar(255) NOT NULL,
+    created_at DATETIME DEFAULT NOW(),
+    PRIMARY KEY (profile_id),
+    FOREIGN KEY (profile_id) references profiles(id)
 );
