@@ -13,6 +13,16 @@ CREATE TABLE users (
    	INDEX users_phone_idx(phone)
 );
 
+-- аватарки пользователей будут хранится в отдельной таблице
+
+DROP TABLE IF EXISTS avatars;
+CREATE TABLE avatars(
+    id SERIAL PRIMARY KEY,
+    path varchar(255) NOT NULL,
+    created_at DATETIME DEFAULT NOW()
+);
+
+
 -- в нашей соцсети можно иметь несколько профилей (аккаунтов)
 
 DROP TABLE IF EXISTS profiles;
@@ -118,17 +128,6 @@ CREATE TABLE media_files(
     FOREIGN KEY (profile_id) references profiles(id)
 );
 
--- аватарки пользователей будут хранится в отдельной таблице
-
-DROP TABLE IF EXISTS avatars;
-CREATE TABLE avatars(
-    id SERIAL PRIMARY KEY,
-    profile_id BIGINT UNSIGNED NOT NULL,
-    path varchar(255) NOT NULL,
-    created_at DATETIME DEFAULT NOW(),
-    FOREIGN KEY (profile_id) references profiles(id)
-);
-
 -- лайки к постам, медиа и профилям будут хранится в трёх разных таблицах
 
 DROP TABLE IF EXISTS posts_likes;
@@ -152,7 +151,7 @@ CREATE TABLE media_files_likes(
 );
 
 DROP TABLE IF EXISTS profiles_likes;
-CREATE TABLE media_files_likes(
+CREATE TABLE profiles_likes(
     profile_id BIGINT UNSIGNED NOT NULL,
     target_profile_id BIGINT UNSIGNED NOT NULL,
     created_at DATETIME DEFAULT NOW(),
