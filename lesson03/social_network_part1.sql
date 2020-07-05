@@ -20,6 +20,7 @@ DROP TABLE IF EXISTS profiles;
 CREATE TABLE profiles (
 	id SERIAL PRIMARY key,
 	user_id BIGINT UNSIGNED NOT NULL,
+	name VARCHAR(255),
     gender CHAR(1),
     birthday DATE,
     created_at DATETIME DEFAULT NOW(),
