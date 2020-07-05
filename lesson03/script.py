@@ -49,8 +49,38 @@ def get_user_ids(users):
     return [user[0] for user in users]
 
 
-def add_avatars():
-    pass
+def get_all_profiles(cursor):
+    sql = 'SELECT * FROM profiles'
+    cursor.execute(sql)
+    return cursor.fetchall()
+
+
+def get_profile_ids(profiles):
+    return [profile[0] for profile in profiles]
+
+
+def generate_random_files():
+    symbols = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    result = ''.join(random.choice(symbols) for _ in range(25))
+    return result
+
+
+def generate_avatars(profile_ids):
+    proportion = 0.9
+    avatars = []
+    profile_ids_with_avatar_count = int(len(profile_ids) * proportion)
+    profile_ids_with_avatar = random.sample(profile_ids, profile_ids_with_avatar_count)
+    for profile_id in profile_ids_with_avatar:
+        avatar = f'{generate_random_files()}.jpg'
+        avatars.append((profile_id, avatar))
+    return avatars
+
+
+def add_avatars(cursor, profile_ids):
+    avatars = generate_avatars(profile_ids)
+    sql = "INSERT INTO avatars (profile_id, path) VALUES (%s, %s)"
+
+    cursor.executemany(sql, avatars)
 
 
 def generate_profiles(user_ids):
@@ -97,8 +127,7 @@ if __name__ == '__main__':
     host = os.getenv('HOST')
     username = os.getenv('LOGIN')
     password = os.getenv('PASSWORD')
-
-    database = 'social_network'
+    database = os.getenv('DATABASE')
 
     database = get_db_connection(host, username, password, database)
     cursor = database.cursor()
@@ -116,5 +145,12 @@ if __name__ == '__main__':
     # add_profiles(cursor, random_user_ids)
     # database.commit()
 
-    add_messages(cursor, user_ids, 10000)
+    # add_messages(cursor, user_ids, 10000)
+    # database.commit()
+
+    # print(generate_random_files())
+
+    profiles = get_all_profiles(cursor)
+    profile_ids = get_profile_ids(profiles)
+    add_avatars(cursor, profile_ids)
     database.commit()
