@@ -4,9 +4,14 @@ from faker import Faker
 
 from data_generator.tools.utils import check_repost
 
+
 def get_all_posts_ids(cursor):
+    cursor.reset()
     sql = 'SELECT id FROM posts'
-    return cursor.execute(sql)
+    cursor.execute(sql)
+    row = cursor.fetchall()
+    result = list(sum(row, ()))
+    return result
 
 
 def get_random_post_id():

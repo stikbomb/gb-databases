@@ -9,7 +9,7 @@ from data_generator.tools.profiles import add_profiles, get_all_profiles, get_pr
 from data_generator.tools.avatars import add_avatars
 from data_generator.tools.messages import add_messages
 from data_generator.tools.posts import get_all_posts_ids, add_posts
-
+from data_generator.tools.comments import add_comments
 
 import data_generator.tools.utils as utils
 
@@ -48,9 +48,13 @@ if __name__ == '__main__':
     # profile_ids = get_profile_ids(profiles)
     # add_avatars(cursor, profile_ids)
     # database.commit()
-    print(get_all_posts_ids(cursor))
+
     users = get_all_users(cursor)
     profiles_ids = get_profile_ids(users)
     # profiles_ids = get_all_profiles_ids(cursor)
-    print(add_posts(cursor, profiles_ids, 50000))
+    print(add_posts(cursor, profiles_ids, 1))
+    database.commit()
+
+    posts_ids = get_all_posts_ids(cursor)
+    add_comments(cursor, profiles_ids, 100000)
     database.commit()
