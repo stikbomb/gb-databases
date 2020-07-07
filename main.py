@@ -10,6 +10,7 @@ from data_generator.tools.avatars import add_avatars
 from data_generator.tools.messages import add_messages
 from data_generator.tools.posts import get_all_posts_ids, add_posts
 from data_generator.tools.comments import add_comments
+from data_generator.tools.mediafiles import add_media_files
 
 import data_generator.tools.utils as utils
 
@@ -55,6 +56,9 @@ if __name__ == '__main__':
     print(add_posts(cursor, profiles_ids, 1))
     database.commit()
 
-    posts_ids = get_all_posts_ids(cursor)
-    add_comments(cursor, profiles_ids, 100000)
+    # posts_ids = get_all_posts_ids(cursor)
+    # add_comments(cursor, profiles_ids, 100000)
+    # database.commit()
+
+    add_media_files(cursor, profiles_ids, 2000)
     database.commit()
