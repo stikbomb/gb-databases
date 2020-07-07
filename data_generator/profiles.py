@@ -2,7 +2,7 @@ import random
 
 from faker import Faker
 
-from data_generator.tools.utils import convert_birthday_date
+from data_generator.utils import convert_birthday_date
 
 
 def get_all_profiles(cursor):

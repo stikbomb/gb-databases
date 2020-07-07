@@ -2,7 +2,7 @@ import random
 
 from faker import Faker
 
-from data_generator.tools.utils import generate_random_file
+from data_generator.utils import generate_random_file
 
 
 def generate_users(users_count):

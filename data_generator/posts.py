@@ -2,7 +2,7 @@ import random
 
 from faker import Faker
 
-from data_generator.tools.utils import check_repost
+from data_generator.utils import check_repost
 
 
 def get_all_posts_ids(cursor):

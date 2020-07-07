@@ -2,10 +2,7 @@ import random
 
 from faker import Faker
 
-from data_generator.tools.utils import check_repost
-from data_generator.tools.profiles import  get_all_profiles_ids
-from data_generator.tools.posts import get_all_posts_ids
-
+from data_generator.posts import get_all_posts_ids
 
 
 def get_random_post_id():

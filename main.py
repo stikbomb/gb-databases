@@ -4,14 +4,14 @@ import sys
 from dotenv import load_dotenv
 
 
-from data_generator.tools.utils import get_db_connection
-from data_generator.tools.users import get_all_users, add_users, get_user_ids, get_random_user_ids
-from data_generator.tools.profiles import add_profiles, get_all_profiles, get_profile_ids, get_profiles_count
-from data_generator.tools.avatars import add_avatars
-from data_generator.tools.messages import add_messages
-from data_generator.tools.posts import add_posts
-from data_generator.tools.comments import add_comments
-from data_generator.tools.mediafiles import add_media_files
+from data_generator.utils import get_db_connection
+from data_generator.users import get_all_users, add_users, get_user_ids, get_random_user_ids
+from data_generator.profiles import add_profiles, get_all_profiles, get_profile_ids, get_profiles_count
+from data_generator.avatars import add_avatars
+from data_generator.messages import add_messages
+from data_generator.posts import add_posts
+from data_generator.comments import add_comments
+from data_generator.mediafiles import add_media_files
 
 
 if __name__ == '__main__':
