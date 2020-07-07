@@ -23,3 +23,10 @@ def generate_random_file():
 def convert_birthday_date(faker_date):
     year, month, day = str(faker_date).split('-')
     return date(int(year), int(month), int(day))
+
+
+def check_repost():
+    if random.randint(0, 10) == 7:
+        return True
+    else:
+        return False

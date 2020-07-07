@@ -7,12 +7,20 @@ from data_generator.tools.utils import convert_birthday_date
 
 def get_all_profiles(cursor):
     sql = 'SELECT * FROM profiles'
+    cursor.reset()
     cursor.execute(sql)
     return cursor.fetchall()
 
 
 def get_profile_ids(profiles):
     return [profile[0] for profile in profiles]
+
+
+def get_all_profiles_ids(cursor):
+    sql = 'SELECT id from profiles'
+    cursor.reset()
+    cursor.execute(sql)
+    return cursor.fetchall()
 
 
 def generate_profiles(user_ids):

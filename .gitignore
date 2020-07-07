@@ -2,3 +2,8 @@
 .idea/
 venv/
 myvenv/
+data_generator/tools/__pycache__/*
+*.pyc
+data_generator/tools/__pycache__/profiles.cpython-38.pyc
+data_generator/tools/__pycache__/users.cpython-38.pyc
+data_generator/tools/__pycache__/utils.cpython-38.pyc
