@@ -17,5 +17,4 @@ def generate_messages(user_ids, messages_count):
 def add_messages(cursor, user_ids, messages_count):
     messages = generate_messages(user_ids, messages_count)
     sql = "INSERT INTO messages (from_profile_id, to_profile_id, body) VALUES (%s, %s, %s)"
-
     cursor.executemany(sql, messages)

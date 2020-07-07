@@ -42,5 +42,4 @@ def generate_mediafiles(profiles_ids, files_count):
 def add_media_files(cursor, profiles_ids, files_count):
     sql = 'INSERT INTO media_files (profile_id, path, title, description) VALUES (%s, %s, %s, %s)'
     media_files = generate_mediafiles(profiles_ids, files_count)
-    print(media_files)
     cursor.executemany(sql, media_files)

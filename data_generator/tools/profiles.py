@@ -42,3 +42,9 @@ def add_profiles(cursor, users_id):
     profiles = generate_profiles(users_id)
     sql = "INSERT INTO profiles (user_id, gender, name, birthday, hometown) VALUES (%s, %s, %s, %s, %s)"
     cursor.executemany(sql, profiles)
+
+
+def get_profiles_count(cursor):
+    sql = 'SELECT COUNT(id) from profiles'
+    cursor.execute(sql)
+    return cursor.fetchone()[0]

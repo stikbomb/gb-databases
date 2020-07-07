@@ -28,7 +28,5 @@ def generate_comments(profiles_ids, posts_ids, comments_count):
 def add_comments(cursor, profiles_ids, posts_count):
     sql = 'INSERT INTO comments (profile_id, post_id, body) VALUES (%s, %s, %s)'
     posts_ids = get_all_posts_ids(cursor)
-    print(posts_ids)
     comments = generate_comments(profiles_ids, posts_ids, posts_count)
-    print(comments)
     cursor.executemany(sql, comments)
