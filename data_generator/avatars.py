@@ -1,20 +1,18 @@
-import random
-
 from .utils import generate_random_file
+from .profiles import get_random_profiles_ids
 
 
-def generate_avatars(profile_ids, avatars_count):
-    avatars = []
-    profile_ids_with_avatar = random.sample(profile_ids, avatars_count)
-
-    for profile_id in profile_ids_with_avatar:
-        avatar = f'{generate_random_file()}.jpg'
-        avatars.append((profile_id, avatar))
+def generate_avatars(avatars_count):
+    avatars = [f'{generate_random_file()}.jpg' for _ in range(avatars_count)]
     return avatars
 
 
-def add_avatars(cursor, profile_ids, avatars_count):
-    avatars = generate_avatars(profile_ids, avatars_count)
+def add_avatars(cursor, avatars_count):
+    avatars = generate_avatars(avatars_count)
+    profiles_ids = get_random_profiles_ids(cursor, avatars_count)
+
+    values = list(zip(profiles_ids, avatars))
+
     sql = "INSERT INTO avatars (profile_id, path) VALUES (%s, %s)"
 
-    cursor.executemany(sql, avatars)
+    cursor.executemany(sql, values)

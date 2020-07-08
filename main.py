@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 
 from data_generator.utils import get_db_connection
-from data_generator.users import get_all_users, add_users, get_user_ids, get_random_user_ids
+from data_generator.users import add_users, get_random_user_ids, get_all_users_ids
 from data_generator.profiles import add_profiles, get_all_profiles, get_profile_ids, get_profiles_count
 from data_generator.avatars import add_avatars
 from data_generator.messages import add_messages
@@ -17,11 +17,18 @@ from data_generator.mediafiles import add_media_files
 if __name__ == '__main__':
 
     # PARAMS
-    user_count = 1000
-    posts_count = 10000
-    comments_count = 20000
-    mediafiles_count = 500
-    message_count = 4000
+    # user_count = 1000
+    # posts_count = 10000
+    # comments_count = 20000
+    # mediafiles_count = 500
+    # message_count = 4000
+    # avatars_proportion = 0.8
+
+    user_count = 10
+    posts_count = 100
+    comments_count = 20
+    mediafiles_count = 5
+    message_count = 40
     avatars_proportion = 0.8
 
     # ENVS TO DB
@@ -45,49 +52,47 @@ if __name__ == '__main__':
 
     # ADD PROFILES TO ALL USERS
     sys.stdout.write('Adding profiles to all users... ')
-    users = get_all_users(cursor)
-    user_ids = get_user_ids(users)
-    add_profiles(cursor, user_ids)
+    users_ids = get_all_users_ids(cursor)
+    add_profiles(cursor, users_ids)
     database.commit()
     sys.stdout.write('Done!\n')
 
     # ADD RANDOM ANOTHER PROFILES
     profiles_count = int(user_count * 0.3)
     sys.stdout.write(f'Adding {profiles_count} additional profiles... ')
-    random_user_ids = get_random_user_ids(user_ids, profiles_count)
+    random_user_ids = get_random_user_ids(cursor, profiles_count)
     add_profiles(cursor, random_user_ids)
     database.commit()
     sys.stdout.write('Done!\n')
 
     # VARS TO OTHER INSERTS
-    users = get_all_users(cursor)
-    user_ids = get_user_ids(users)
+    user_ids = get_all_users_ids(cursor)
     profiles = get_all_profiles(cursor)
     profile_ids = get_profile_ids(profiles)
 
     # ADD MESSAGES
     sys.stdout.write(f'Adding {message_count} messages... ')
-    add_messages(cursor, user_ids, message_count)
+    add_messages(cursor, message_count)
     database.commit()
     sys.stdout.write('Done!\n')
 
     # ADD AVATARS
-    profiles_count = get_profiles_count(cursor)
-    avatars_count = int(profiles_count * avatars_proportion)
-    sys.stdout.write(f'Adding {avatars_count} avatars... ')
-    add_avatars(cursor, profile_ids, avatars_count)
-    database.commit()
-    sys.stdout.write('Done!\n')
+    # profiles_count = get_profiles_count(cursor)
+    # avatars_count = int(profiles_count * avatars_proportion)
+    # sys.stdout.write(f'Adding {avatars_count} avatars... ')
+    # add_avatars(cursor, avatars_count)
+    # database.commit()
+    # sys.stdout.write('Done!\n')
 
     # ADD POSTS
     sys.stdout.write(f'Adding {posts_count} posts... ')
-    add_posts(cursor, profile_ids, posts_count)
+    add_posts(cursor, posts_count)
     database.commit()
     sys.stdout.write('Done!\n')
 
     # ADD COMMENTS
     sys.stdout.write(f'Adding {comments_count} comments... ')
-    add_comments(cursor, profile_ids, comments_count)
+    add_comments(cursor, comments_count)
     database.commit()
     sys.stdout.write('Done!\n')
 
@@ -96,3 +101,4 @@ if __name__ == '__main__':
     add_media_files(cursor, profile_ids, mediafiles_count)
     database.commit()
     sys.stdout.write('Done!\n')
+

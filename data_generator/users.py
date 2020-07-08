@@ -26,21 +26,15 @@ def add_users(cursor, users_count):
     cursor.executemany(sql, users)
 
 
-def get_all_users(cursor):
-    sql = 'SELECT * FROM users'
-    cursor.reset()
+def get_random_user_ids(cursor, count):
+    sql = f'SELECT id FROM users ORDER BY RAND () LIMIT {count}'
     cursor.execute(sql)
-    return cursor.fetchall()
-
-
-def get_random_user_ids(users_ids, count):
-    return random.sample(users_ids, count)
-
-
-def get_user_ids(users):
-    return [user[0] for user in users]
+    result = [row[0] for row in cursor.fetchall()]
+    return result
 
 
 def get_all_users_ids(cursor):
     sql = 'SELECT id FROM users'
-    return cursor.execute(sql)
+    cursor.execute(sql)
+    result = [row[0] for row in cursor.fetchall()]
+    return result

@@ -26,7 +26,7 @@ def convert_birthday_date(faker_date):
 
 
 def check_repost():
-    if random.randint(0, 10) == 7:
+    if random.randrange(0, 10) == 7:
         return True
     else:
         return False

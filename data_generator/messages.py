@@ -1,20 +1,19 @@
-import random
-
 from faker import Faker
 
+from data_generator.profiles import get_random_user_ids
 
-def generate_messages(user_ids, messages_count):
+
+def generate_messages(messages_count):
     fake = Faker('ru_RU')
-    messages = []
-    for _ in range(messages_count):
-        from_profile_id, to_profile_id = random.sample(user_ids, 2)
-        message = fake.text()
-        messages.append((from_profile_id, to_profile_id, message))
+    messages = [fake.text() for _ in range(messages_count)]
 
     return messages
 
 
-def add_messages(cursor, user_ids, messages_count):
-    messages = generate_messages(user_ids, messages_count)
+def add_messages(cursor, messages_count):
+    from_profile_id = get_random_user_ids(cursor, messages_count)
+    to_profile_id = get_random_user_ids(cursor, messages_count)
+    messages = generate_messages(messages_count)
+    values = list(zip(from_profile_id, to_profile_id, messages))
     sql = "INSERT INTO messages (from_profile_id, to_profile_id, body) VALUES (%s, %s, %s)"
-    cursor.executemany(sql, messages)
+    cursor.executemany(sql, values)
