@@ -168,3 +168,22 @@ FROM users_2;
 -- Из таблицы users необходимо извлечь пользователей, родившихся в августе и мае. Месяцы заданы в виде списка английских названий ('may', 'august')
 select * from users_2 where monthname(birthday) in ('may', 'august');
 
+-- Из таблицы catalogs извлекаются записи при помощи запроса. SELECT * FROM catalogs WHERE id IN (5, 1, 2);
+-- Отсортируйте записи в порядке, заданном в списке IN.
+DROP TABLE IF EXISTS catalog;
+CREATE TABLE catalog
+(
+    id       SERIAL PRIMARY KEY,
+    name     varchar(50)
+);
+
+insert into catalog (name) value ('Кофеварка');
+insert into catalog (name) value ('Скоровака');
+insert into catalog (name) value ('Мультиварка');
+insert into catalog (name) value ('Чайник');
+insert into catalog (name) value ('Блендер');
+insert into catalog (name) value ('Миксер');
+insert into catalog (name) value ('Микроволновка');
+insert into catalog (name) value ('Мясорубка');
+
+SELECT * FROM catalog WHERE id IN (5, 1, 2) ORDER BY FIND_IN_SET(id, '5,1,2');
