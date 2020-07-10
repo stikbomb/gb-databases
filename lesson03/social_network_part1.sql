@@ -8,8 +8,10 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE users (
 	id SERIAL PRIMARY KEY,
 	login VARCHAR(50),
+	password VARCHAR(255),
 	email VARCHAR(120) UNIQUE,
     phone BIGINT,
+    created_at DATETIME DEFAULT NOW(),
    	INDEX users_phone_idx(phone)
 );
 
@@ -71,7 +73,7 @@ DROP TABLE IF EXISTS users_communities;
 CREATE TABLE users_communities(
 	profile_id BIGINT UNSIGNED NOT NULL,
 	community_id BIGINT UNSIGNED NOT NULL,
-	PRIMARY KEY (profile_id, community_id), 
+	PRIMARY KEY (profile_id, community_id),
   	FOREIGN KEY (profile_id) REFERENCES profiles(id),
   	FOREIGN KEY (community_id) REFERENCES communities(id)
 );
@@ -84,7 +86,7 @@ CREATE TABLE posts(
 	body text,
 	attachments JSON,
 	metadata JSON,
-	parent_post_id BIGINT UNSIGNED NOT NULL,
+	parent_post_id BIGINT UNSIGNED,
 	created_at DATETIME DEFAULT NOW(),
 	updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	FOREIGN KEY (profile_id) REFERENCES profiles(id),
