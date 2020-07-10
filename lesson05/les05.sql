@@ -187,3 +187,5 @@ insert into catalog (name) value ('Микроволновка');
 insert into catalog (name) value ('Мясорубка');
 
 SELECT * FROM catalog WHERE id IN (5, 1, 2) ORDER BY FIND_IN_SET(id, '5,1,2');
+
+SELECT EXP(SUM(LOG(id))) FROM catalog;
