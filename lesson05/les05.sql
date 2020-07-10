@@ -147,12 +147,12 @@ select DAYOFWEEK(
            )
 from users_2;
 
-select DAYOFWEEK(
+select DAYNAME(
                concat(YEAR(now()), '-', month(birthday), '-', day(birthday))
            )    as 'day of week',
        count(*) as count
 from users_2
-group by DAYOFWEEK(
+group by DAYNAME(
                  concat(YEAR(now()), '-', month(birthday), '-', day(birthday))
              );
 
@@ -162,4 +162,3 @@ SELECT round(AVG(YEAR(CURDATE()) -
               0)
            ))
 FROM users_2;
-
