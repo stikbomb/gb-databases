@@ -140,6 +140,8 @@ INSERT into users_2 (name, birthday)
 VALUES ('Frank', '1950-12-20');
 INSERT into users_2 (name, birthday)
 VALUES ('Frank', '2019-07-10');
+INSERT into users_2 (name, birthday)
+VALUES ('Hanry', '2019-08-10');
 
 
 select DAYOFWEEK(
@@ -162,3 +164,7 @@ SELECT round(AVG(YEAR(CURDATE()) -
               0)
            ))
 FROM users_2;
+
+-- Из таблицы users необходимо извлечь пользователей, родившихся в августе и мае. Месяцы заданы в виде списка английских названий ('may', 'august')
+select * from users_2 where monthname(birthday) in ('may', 'august');
+
