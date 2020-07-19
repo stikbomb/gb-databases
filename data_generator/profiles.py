@@ -5,6 +5,7 @@ from faker import Faker
 from data_generator.utils import convert_birthday_date
 from data_generator.users import get_random_user_ids
 
+
 def get_all_profiles(cursor):
     sql = 'SELECT * FROM profiles'
     cursor.reset()
@@ -20,7 +21,8 @@ def get_all_profiles_ids(cursor):
     sql = 'SELECT id from profiles'
     cursor.reset()
     cursor.execute(sql)
-    return cursor.fetchall()
+    result = [row   [0] for row in cursor.fetchall()]
+    return result
 
 
 def generate_profiles(profiles_count):

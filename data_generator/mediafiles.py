@@ -9,6 +9,14 @@ def get_random_post_id():
     pass
 
 
+def get_all_mediafiles_ids(cursor):
+    cursor.reset()
+    sql = 'SELECT id FROM media_files'
+    cursor.execute(sql)
+    result = [row[0] for row in cursor.fetchall()]
+    return result
+
+
 def generate_mediafile():
     fake = Faker('ru_RU')
     type = random.choice(['picture', 'audio', 'video'])
