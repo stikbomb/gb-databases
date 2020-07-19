@@ -46,3 +46,17 @@ def add_posts_likes(cursor, max_likes):
     posts_likes = generate_posts_likes(cursor, max_likes)
 
     cursor.executemany(sql, posts_likes)
+
+
+def generate_media_likes(cursor, max_likes):
+    profiles = get_all_profiles_ids(cursor)
+    mediafiles = get_all_mediafiles_ids(cursor)
+
+    return generate_likes(profiles, mediafiles, max_likes)
+
+
+def add_media_likes(cursor, max_likes):
+    sql = "INSERT INTO media_files_likes (profile_id, media_file_id) VALUES (%s, %s)"
+    media_likes = generate_media_likes(cursor, max_likes)
+
+    cursor.executemany(sql, media_likes)

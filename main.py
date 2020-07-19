@@ -12,7 +12,7 @@ from data_generator.messages import add_messages
 from data_generator.posts import add_posts
 from data_generator.comments import add_comments
 from data_generator.mediafiles import add_media_files
-from data_generator.likes import add_profiles_likes, add_posts_likes
+from data_generator.likes import add_profiles_likes, add_posts_likes, add_media_likes
 
 if __name__ == '__main__':
 
@@ -32,6 +32,7 @@ if __name__ == '__main__':
     avatars_proportion = 0.8
     max_likes_for_profiles_per_profile = 200
     max_likes_for_posts_per_profile = 200
+    max_likes_for_media_per_profles = 300
 
     # ENVS TO DB
     load_dotenv()
@@ -111,10 +112,17 @@ if __name__ == '__main__':
     # database.commit()
     # sys.stdout.write('Done!\n')
 
-    # ADD POSTS LIKES
-    sys.stdout.write(f'Maximum likes to posts per profile {max_likes_for_profiles_per_profile}. '
-                     f'Adding likes to profiles... ')
-    add_posts_likes(cursor, max_likes_for_posts_per_profile)
+    # # ADD POSTS LIKES
+    # sys.stdout.write(f'Maximum likes to posts per profile {max_likes_for_posts_per_profile}. '
+    #                  f'Adding likes to posts... ')
+    # add_posts_likes(cursor, max_likes_for_posts_per_profile)
+    # database.commit()
+    # sys.stdout.write('Done!\n')
+
+    # ADD MEDIA LIKES
+    sys.stdout.write(f'Maximum likes to media per profile {max_likes_for_media_per_profles}. '
+                     f'Adding likes to media... ')
+    add_media_likes(cursor, max_likes_for_media_per_profles)
     database.commit()
     sys.stdout.write('Done!\n')
 
