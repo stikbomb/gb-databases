@@ -5,25 +5,44 @@ from .profiles import get_all_profiles_ids
 from .mediafiles import get_all_mediafiles_ids
 
 
-def generate_profiles_likes(cursor):
-    profiles = get_all_profiles_ids(cursor)
+def generate_likes(profiles_ids, entities_ids, max_likes_per_profile):
     result = []
-    max_likes_per_profile = 200
 
-    if max_likes_per_profile > len(profiles):
-        max_likes_per_profile = len(profiles)
-        
-    for profile in profiles:
+    if max_likes_per_profile > len(entities_ids):
+        max_likes_per_profile = len(entities_ids)
+
+    for profile in profiles_ids:
         count = random.randrange(max_likes_per_profile)
-        liked_profiles = random.sample(profiles, count)
-        for liked_profile in liked_profiles:
-            result.append((profile, liked_profile))
+        liked_entities = random.sample(entities_ids, count)
+        for entity in liked_entities:
+            result.append((profile, entity))
 
     return result
 
 
-def add_profiles_likes(cursor):
+def generate_profiles_likes(cursor, max_likes):
+    profiles = get_all_profiles_ids(cursor)
+    max_likes_per_profile = max_likes
+
+    return generate_likes(profiles, profiles, max_likes_per_profile)
+
+
+def add_profiles_likes(cursor, max_likes):
     sql = "INSERT INTO profiles_likes (profile_id, target_profile_id) VALUES (%s, %s)"
-    profiles_likes = generate_profiles_likes(cursor)
+    profiles_likes = generate_profiles_likes(cursor, max_likes)
 
     cursor.executemany(sql, profiles_likes)
+
+
+def generate_posts_likes(cursor, max_likes):
+    profiles = get_all_profiles_ids(cursor)
+    posts = get_all_posts_ids(cursor)
+
+    return generate_likes(profiles, posts, max_likes)
+
+
+def add_posts_likes(cursor, max_likes):
+    sql = "INSERT INTO posts_likes (profile_id, post_id) VALUES (%s, %s)"
+    posts_likes = generate_posts_likes(cursor, max_likes)
+
+    cursor.executemany(sql, posts_likes)

@@ -32,4 +32,19 @@ select 	case (gender)
 	when '1' then 'женщина'
 	end as gender, count(*) from profiles_likes left join profiles on profiles_likes.profile_id = profiles.user_id group by gender;
 
-INSERT INTO profiles_likes (profile_id, target_profile_id) VALUES (1, 2)
+INSERT INTO profiles_likes (profile_id, target_profile_id) VALUES (1, 2);
+
+drop table profiles_likes;
+DROP TABLE IF EXISTS `profiles_likes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `profiles_likes` (
+  `profile_id` bigint unsigned NOT NULL,
+  `target_profile_id` bigint unsigned NOT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`profile_id`,`target_profile_id`),
+  KEY `target_profile_id` (`target_profile_id`),
+  CONSTRAINT `profiles_likes_ibfk_1` FOREIGN KEY (`profile_id`) REFERENCES `profiles` (`id`),
+  CONSTRAINT `profiles_likes_ibfk_2` FOREIGN KEY (`target_profile_id`) REFERENCES `profiles` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
