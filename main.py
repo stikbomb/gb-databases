@@ -6,13 +6,14 @@ from dotenv import load_dotenv
 
 from data_generator.utils import get_db_connection
 from data_generator.users import add_users, get_random_user_ids, get_all_users_ids
-from data_generator.profiles import add_profiles, get_all_profiles, get_profile_ids, get_profiles_count
+from data_generator.profiles import add_profiles, get_all_profiles, get_profile_ids, get_profiles_count, get_all_profiles_ids
 from data_generator.avatars import add_avatars
 from data_generator.messages import add_messages
 from data_generator.posts import add_posts
 from data_generator.comments import add_comments
 from data_generator.mediafiles import add_media_files
 from data_generator.likes import add_profiles_likes, delete_self_profiles_likes, add_posts_likes, add_media_likes
+from data_generator.friend_requests import generate_friend_requests, add_friend_requests
 
 if __name__ == '__main__':
 
@@ -30,9 +31,11 @@ if __name__ == '__main__':
     mediafiles_count = 5
     message_count = 40
     avatars_proportion = 0.8
+
     max_likes_for_profiles_per_profile = 200
     max_likes_for_posts_per_profile = 200
     max_likes_for_media_per_profles = 300
+    max_friend_requests_per_profile = 100
 
     # ENVS TO DB
     load_dotenv()
@@ -126,5 +129,9 @@ if __name__ == '__main__':
     # database.commit()
     # sys.stdout.write('Done!\n')
 
-    delete_self_profiles_likes(cursor)
+    # delete_self_profiles_likes(cursor)
+    # database.commit()
+
+    # ADD FRIEND REQUESTS
+    add_friend_requests(cursor, max_friend_requests_per_profile)
     database.commit()

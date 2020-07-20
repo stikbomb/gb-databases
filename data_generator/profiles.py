@@ -21,7 +21,7 @@ def get_all_profiles_ids(cursor):
     sql = 'SELECT id from profiles'
     cursor.reset()
     cursor.execute(sql)
-    result = [row   [0] for row in cursor.fetchall()]
+    result = [row[0] for row in cursor.fetchall()]
     return result
 
 
