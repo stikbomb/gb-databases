@@ -30,8 +30,13 @@ def generate_profiles_likes(cursor, max_likes):
 def add_profiles_likes(cursor, max_likes):
     sql = "INSERT INTO profiles_likes (profile_id, target_profile_id) VALUES (%s, %s)"
     profiles_likes = generate_profiles_likes(cursor, max_likes)
-
+    delete_self_profiles_likes(cursor)
     cursor.executemany(sql, profiles_likes)
+
+
+def delete_self_profiles_likes(cursor):
+    sql = 'delete from profiles_likes where profile_id = target_profile_id'
+    cursor.execute(sql)
 
 
 def generate_posts_likes(cursor, max_likes):

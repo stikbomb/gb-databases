@@ -48,3 +48,6 @@ CREATE TABLE `profiles_likes` (
   CONSTRAINT `profiles_likes_ibfk_2` FOREIGN KEY (`target_profile_id`) REFERENCES `profiles` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+delete from profiles_likes where profile_id = target_profile_id;
+select * from profiles_likes where profile_id = target_profile_id

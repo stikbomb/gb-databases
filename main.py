@@ -12,7 +12,7 @@ from data_generator.messages import add_messages
 from data_generator.posts import add_posts
 from data_generator.comments import add_comments
 from data_generator.mediafiles import add_media_files
-from data_generator.likes import add_profiles_likes, add_posts_likes, add_media_likes
+from data_generator.likes import add_profiles_likes, delete_self_profiles_likes, add_posts_likes, add_media_likes
 
 if __name__ == '__main__':
 
@@ -120,9 +120,11 @@ if __name__ == '__main__':
     # sys.stdout.write('Done!\n')
 
     # ADD MEDIA LIKES
-    sys.stdout.write(f'Maximum likes to media per profile {max_likes_for_media_per_profles}. '
-                     f'Adding likes to media... ')
-    add_media_likes(cursor, max_likes_for_media_per_profles)
-    database.commit()
-    sys.stdout.write('Done!\n')
+    # sys.stdout.write(f'Maximum likes to media per profile {max_likes_for_media_per_profles}. '
+    #                  f'Adding likes to media... ')
+    # add_media_likes(cursor, max_likes_for_media_per_profles)
+    # database.commit()
+    # sys.stdout.write('Done!\n')
 
+    delete_self_profiles_likes(cursor)
+    database.commit()
