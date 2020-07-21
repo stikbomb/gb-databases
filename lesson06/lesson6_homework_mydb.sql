@@ -109,9 +109,33 @@ select id from profiles where id in (select id from (
         select * from profiles order by birthday desc limit 10)
     as c))) as t;
 
--- Подсчитать общее количество лайков к постам, которые получили 10 самых молодых пользователей. (ВАРИАНТ 2)
+-- Подсчитать общее количество лайков к постам, которые получили 10 самых молодых пользователей.
 
-select * from (select id from posts where profile_id in (select id from (
+select count(*) as `Likes count` from (select id from posts where profile_id in (select id from (
         select * from profiles order by birthday desc limit 10)
-    as t)) as l inner join posts on l.id=posts.id
-    where posts.id is not null;
+    as t)) as l join posts_likes on l.id=posts_likes.post_id;
+
+-- Найти 10 пользователей, которые проявляют наименьшую активность в использовании социальной сети.
+
+-- Алгоритм работы простой - в одну большую метутаблицу заносится информация о действиях пользователя - количество
+-- отправленных запросов в друзья, количество групп, в которых состоит пользователь,  количество сообщений,
+-- количество медиа, количество лайков. После этого баллы активности группируются по user_id  и выбирается десять самых
+-- активных/пассивных пользователей.
+-- При этом у каждой активности свой балл, чтобы вес условного запроса в друзья не был равен весу простого лайка.
+
+select profile_id, name, score from (
+select profile_id, sum(score) as score from
+    (select initiator_profile_id as profile_id,  '10' as score from friend_requests
+    union all
+    select profile_id, '15' from users_communities
+    union all
+    select from_profile_id, '3' from messages
+    union all
+    select profile_id, '5' from media_files
+    union all
+    select profile_id, '1' from profiles_likes
+    union all
+    select profile_id, '1' from posts_likes
+    union all
+    select profile_id, '1' from media_files_likes) as l
+group by profile_id order by sum(score) limit 10) as p join profiles on p.profile_id=profiles.id;

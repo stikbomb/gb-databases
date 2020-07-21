@@ -83,6 +83,9 @@ select count(*) from (select id from media where user_id in (select user_id from
 -- активных/пассивных пользователей.
 -- При этом у каждой активности свой балл, чтобы вес условного запроса в друзья не был равен весу простого лайка.
 
+use vk;
+
+select id, CONCAT(firstname, ' ', lastname) as user, score from(
 select user_id, sum(score) as score from
     (select initiator_user_id as user_id,  '10' as score from friend_requests
     union all
@@ -93,4 +96,4 @@ select user_id, sum(score) as score from
     select user_id, '5' from media
     union all
     select user_id, '1' from likes) as l
-group by user_id order by sum(score) limit 10;
+group by user_id order by sum(score) limit 10) as pr join (select id, firstname, lastname from users) as prof on pr.user_id=prof.id;
