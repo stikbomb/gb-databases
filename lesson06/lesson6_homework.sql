@@ -56,7 +56,7 @@ order by count(user_id) desc
 limit 1;
 
 
--- Подсчитать общее количество лайков, которые поставили 10 самых молодых пользователей. (ОШИБОЧНО!!!)
+-- Подсчитать общее количество лайков, которые поставили 10 самых молодых пользователей. (ПОСТАВИЛИ!)
 select count(*)
 from likes where user_id in (SELECT user_id from (select *
 from profiles order by birthday desc limit 10) as t);
@@ -69,7 +69,7 @@ select count(*) from (select * from likes where media_id in (select id from medi
 
 -- Подсчитать общее количество лайков, которые получили 10 самых молодых пользователей. (ВАРИАНТ 2)
 
-select count(0) from (select id from media where user_id in (select user_id from (
+select count(*) from (select id from media where user_id in (select user_id from (
         select * from profiles order by birthday desc limit 10)
     as t)) as l left join likes on l.id=likes.media_id
     where likes.id is not null;
