@@ -15,10 +15,10 @@ def create_users(count):
 
 
 def fill_db(users):
-    r = redis.Redis()
-    # redis.StrictRedis(host="localhost", port=6379, charset="utf-8", decode_responses=True)
+    r = redis.StrictRedis(host="localhost", port=6379, charset="utf-8", decode_responses=True)
     for user in users:
-        r.hset(user[0], user[1], user[2])
+        r.hset(user[0], 'name', user[1])
+        r.hset(user[0], 'email', user[2])
 
 
 if __name__ == '__main__':
@@ -26,6 +26,6 @@ if __name__ == '__main__':
     users = create_users(10)
     fill_db(users)
     print(users)
-
-    print(r.keys(f'*{users[0][0]}'))
-    print(r.keys(f'{users[0][1]}*'))
+    print(r.keys(f'*{users[0][1]}*'))
+    print(r.keys(f'*{users[0][1]}*'))
+    print(r.hgetall(users[0][0]))
