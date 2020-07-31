@@ -52,3 +52,29 @@ INSERT INTO catalogs VALUES
 SELECT * from my_shop.log_archive;
 
 select * from users;
+
+-- (по желанию) Создайте SQL-запрос, который помещает в таблицу users миллион записей.
+-- Оптимизировано только через транзакцию! (доделать)
+
+drop table if exists my_shop.spam;
+
+create table my_shop.spam (
+    item varchar(15)
+);
+
+drop procedure if exists fill_million_rows;
+
+CREATE PROCEDURE fill_million_rows()
+BEGIN
+    DECLARE i int DEFAULT 0;
+    WHILE i <= 1000000 DO
+        INSERT INTO my_shop.spam (item) VALUES (concat(item, i));
+        SET i = i + 1;
+    END WHILE;
+END;
+
+start transaction;
+call fill_million_rows;
+commit;
+
+select count(*) from my_shop.spam;

@@ -1,4 +1,5 @@
 import random
+import time
 
 import redis
 
@@ -44,5 +45,8 @@ def show_random_ip(ip):
 
 if __name__ == '__main__':
     ips = get_ip_pool(10)
-    fill_db(ips, 100000)
+    print(time.time())
+    fill_db(ips, 1000000)
+    print(time.time())
     print(show_random_ip(ips[0]))
+    print(time.time())
