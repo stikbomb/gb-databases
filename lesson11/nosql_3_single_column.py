@@ -12,7 +12,6 @@ def create_db(db_client, db_name):
         print("Database was created.")
 
 
-
 if __name__ == '__main__':
     db_client = pymongo.MongoClient("mongodb://localhost:27017/")
     create_db(db_client, 'shop_products')
